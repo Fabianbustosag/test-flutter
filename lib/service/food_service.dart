@@ -18,6 +18,20 @@ class FoodService{
     // throw UnimplementedError();
   }
 
+  // El delete si funciona
+  Future<void> deleteFoodById(int id) async {
+    await _dio.delete('http://127.0.0.1:8000/api/food/$id/');
+  }
+
+  Future<FoodModel> updateFoodById(int id, FoodModel food) async {
+    final response = await _dio.put(
+      'http://127.0.0.1:8000/api/food/$id',
+      data: food.toJson(),  // Assuming you have a toJson method in FoodModel
+    );
+    final updatedFood = FoodModel.fromJson(response.data);
+    return updatedFood;
+  }
+
   
 
 

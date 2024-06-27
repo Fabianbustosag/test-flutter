@@ -25,7 +25,8 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(onPressed:() {
               // yesNoService.getYesNoModel();
               // foodService.getFoods();
-              foodService.getFoodById(5);
+              // foodService.getFoodById(5);
+              foodService.deleteFoodById(5);
           }),
     );
   }
