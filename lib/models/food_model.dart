@@ -7,6 +7,9 @@ import 'dart:convert';
 // Convierte un [Json] a una [List<FoodModel>]
 List<FoodModel> foodModelFromJson(String str) => List<FoodModel>.from(json.decode(str).map((x) => FoodModel.fromJson(x)));
 
+// Convierte un [List<dynamic>] de Json a List<FoodModel>
+List<FoodModel> foodModelFromJsonListDynamic(List<dynamic> json) => List<FoodModel>.from(json.map((x) => FoodModel.fromJson(x)));
+
 // Convierte una [List<FoodModel>] a un Json 
 String foodModelToJson(List<FoodModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 

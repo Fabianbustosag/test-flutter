@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/provider/yes_no_provider.dart';
 import 'package:flutter_application_1/screens/home.dart';
+import 'package:flutter_application_1/screens/screen_foods.dart';
+import 'package:flutter_application_1/screens/screen_provider_yes_no_.dart';
 import 'package:flutter_application_1/screens/test_yes_no.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context){ YesNoProvider(); })
+        ChangeNotifierProvider(create: (_) => YesNoProvider() )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const YesNoTest(),
+        home: const Home(),
       ),
     );
   }
