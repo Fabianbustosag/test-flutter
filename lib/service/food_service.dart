@@ -4,6 +4,7 @@ import 'package:flutter_application_1/models/food_model.dart';
 class FoodService{
   final _dio = Dio();
 
+  //Esta funcionando si ocurre un problema es por que el modelo se descofiguro, algun tipo de dato esta malo o algun nulo 
   Future<List<FoodModel>> getFoods() async {
     final response = await _dio.get('http://127.0.0.1:8000/api/food/');
     final foodModel = foodModelFromJsonListDynamic(response.data);
@@ -31,9 +32,5 @@ class FoodService{
     final updatedFood = FoodModel.fromJson(response.data);
     return updatedFood;
   }
-
-  
-
-
 
 }

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/service/food_service.dart';
 import 'package:flutter_application_1/service/yes_no_service.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Home2 extends StatefulWidget {
+  const Home2({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Home2> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home2> {
   final YesNoService yesNoService = YesNoService();
   final FoodService foodService = FoodService();
 

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/provider/yes_no_provider.dart';
-import 'package:flutter_application_1/screens/home.dart';
-import 'package:flutter_application_1/screens/screen_foods.dart';
-import 'package:flutter_application_1/screens/screen_provider_yes_no_.dart';
-import 'package:flutter_application_1/screens/test_yes_no.dart';
+import 'package:flutter_application_1/screens/home/home.dart';
+import 'package:flutter_application_1/screens/home/home2.dart';
+import 'package:flutter_application_1/screens/foods/food_screen.dart';
+import 'package:flutter_application_1/screens/yes_no/screen_provider_yes_no_.dart';
+import 'package:flutter_application_1/screens/yes_no/test_yes_no.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

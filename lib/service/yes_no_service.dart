@@ -9,7 +9,7 @@ class YesNoService{
 
     return yesNoModel;
 
-    // throw UnimplementedError();
+    throw UnimplementedError();
   }
 
 
