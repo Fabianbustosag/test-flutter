@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/publication_model.dart';
+import 'package:flutter_application_1/screens/publication/widget/card_publication.dart';
 import 'package:flutter_application_1/service/publication_service.dart';
 
 class PublicationScreen extends StatelessWidget {
@@ -20,7 +21,8 @@ class PublicationScreen extends StatelessWidget {
               itemCount: publicationModels.length,
               itemBuilder: (BuildContext context, int index) { 
                 PublicationModel publication = publicationModels[index];
-                return Text(publication.publDescp);
+                // return Text(publication.publDescp);
+                return CardPublication();
       
                },
             );
