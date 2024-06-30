@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/food_model.dart';
 import 'package:flutter_application_1/service/food_service.dart';
+import 'package:intl/intl.dart';
 
 
 
@@ -16,11 +17,11 @@ class _FoodScreenState extends State<FoodScreen> {
 
   FoodService foodService = FoodService();
 
-  final TextEditingController textController1 = TextEditingController();
-  final TextEditingController textController2= TextEditingController();
-  final TextEditingController textController3 = TextEditingController();
-  final TextEditingController textController4 = TextEditingController();
-  final TextEditingController textController5 = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController categoryController= TextEditingController();
+  final TextEditingController expirationDateController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController foodAmountController = TextEditingController();
 
 
 
@@ -34,36 +35,92 @@ class _FoodScreenState extends State<FoodScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
-              controller: textController1,
+              controller: nameController,
               decoration: const InputDecoration(labelText: 'Nombre alimento'),
             ),
             TextField(
-              controller: textController2,
+              controller: categoryController,
               decoration: const InputDecoration(labelText: 'Categoria'),
             ),
             TextField(
-              controller: textController3,
+              controller: expirationDateController,
               decoration: const InputDecoration(labelText: 'Fecha de vencimiento'),
             ),
             TextField(
-              controller: textController4,
+              controller: priceController,
               decoration: const InputDecoration(labelText: 'Precio'),
             ),
             TextField(
-              controller: textController5,
+              controller: foodAmountController,
               decoration: const InputDecoration(labelText: 'Cantidad'),
             ),
           ],
         ),
         actions: [
-          FilledButton(
+          OutlinedButton(
               onPressed: () {
-                textController1.clear();
+                nameController.clear();
+                categoryController.clear();
+                expirationDateController.clear();
+                priceController.clear();
+                foodAmountController.clear();                
                 Navigator.pop(context);
               },
               child: const Text('Cancelar')),
           FilledButton(
-            onPressed: () {Navigator.pop(context);},
+            onPressed: () {
+              int foodId = 1; // el foodId da igual, pero lo puse requiered hay que cambiarlo
+              String foodName = nameController.text;
+              String imgSrc = 'url_cualquiera'; // hay que poner la url de una archivo subido a static
+              int user = 1; // hay que cambiarlo 
+              String category = categoryController.text;
+              int foodPrice = int.parse(priceController.text);
+              int foodAmount = int.parse(foodAmountController.text);
+              String dateString = "2023-06-30";
+              // String date = '10-10-2000';
+
+              String expirationDateString = expirationDateController.text;
+
+              // Parse the input date string
+              DateTime parsedDate = DateFormat('dd-MM-yyyy').parse(expirationDateString);
+
+              // Format the date to yyyy-MM-dd format
+              String formattedDate = DateFormat('yyyy-MM-dd').format(parsedDate);
+              
+              DateTime? expirationDate = DateTime.parse(formattedDate);
+
+
+              FoodModel newFood = FoodModel(
+                foodId: foodId,
+                foodName: foodName,
+                imgSrc: imgSrc,
+                user: user,
+                category: category,
+                foodPrice: foodPrice,
+                foodAmount: foodAmount,
+                expirationDate: expirationDate,
+              );
+
+              // FoodModel newFood = FoodModel(
+              //   foodId: 1,
+              //   foodName: 'foodName',
+              //   imgSrc: 'imgSrc',
+              //   user: 1,
+              //   category: 'category',
+              //   foodPrice: 1000,
+              //   foodAmount: 1,
+              //   // expirationDate: expirationDate,
+              // );
+
+              foodService.addFood(newFood);
+
+              
+              
+              
+              
+              
+              Navigator.pop(context);
+              },
             child: const Text('Anadir'))
         ],
       ));

@@ -12,6 +12,18 @@ class FoodService{
     // throw UnimplementedError();
   }
 
+  Future<void> addFood(FoodModel foodModel) async {
+    final response = await _dio.post('http://127.0.0.1:8000/api/food/', data: foodModel.toJson(), // Asegúrate de que FoodModel tenga un método toJson()
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print('Food added successfully');
+    } else {
+      throw Exception('Failed to add food');
+    }
+  }
+
+
   Future<FoodModel> getFoodById(int id) async {
     final response = await _dio.get('http://127.0.0.1:8000/api/food/${id}');
     final foodModel = FoodModel.fromJson(response.data);
