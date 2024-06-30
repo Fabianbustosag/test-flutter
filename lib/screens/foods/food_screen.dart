@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/food_model.dart';
-import 'package:flutter_application_1/screens/foods/widget/date_picker.dart';
 import 'package:flutter_application_1/service/food_service.dart';
 
 
@@ -15,33 +14,15 @@ class FoodScreen extends StatefulWidget {
 
 class _FoodScreenState extends State<FoodScreen> {
 
+  FoodService foodService = FoodService();
+
   final TextEditingController textController1 = TextEditingController();
   final TextEditingController textController2= TextEditingController();
   final TextEditingController textController3 = TextEditingController();
   final TextEditingController textController4 = TextEditingController();
   final TextEditingController textController5 = TextEditingController();
 
-  void deleteBox() {
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: const Text('¿Desea eliminar?'),
-              // content: const Text('Necesita ingresar todos los campos!'),
-              actions: <Widget>[
-                FilledButton(
-                  onPressed: () => Navigator.pop(context, 'Cancelar'),
-                  child: const Text('Cancelar'),
-                ),
-                OutlinedButton(
-                  onPressed: () {
-                    // Aca va la funcion de eliminar
-                    Navigator.pop(context, 'Eliminar');
-                  },
-                  child: const Text('Eliminar'),
-                )
-              ],
-            ));
-  }
+
 
   // Funcion showDialog para agregar una nueva nota en la base de datos
   void openBox({String? docID}) {
@@ -54,15 +35,15 @@ class _FoodScreenState extends State<FoodScreen> {
           children: [
             TextField(
               controller: textController1,
-              decoration: InputDecoration(labelText: 'Nombre alimento'),
+              decoration: const InputDecoration(labelText: 'Nombre alimento'),
             ),
             TextField(
               controller: textController2,
-              decoration: InputDecoration(labelText: 'Categoria'),
+              decoration: const InputDecoration(labelText: 'Categoria'),
             ),
             TextField(
               controller: textController3,
-              decoration: InputDecoration(labelText: 'Fecha de vencimiento'),
+              decoration: const InputDecoration(labelText: 'Fecha de vencimiento'),
             ),
             TextField(
               controller: textController4,
@@ -91,10 +72,16 @@ class _FoodScreenState extends State<FoodScreen> {
   @override
   Widget build(BuildContext context) {
 
-    FoodService foodService = FoodService();
+    
 
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: IconButton(onPressed: (){setState(() {});}, icon: const Icon(Icons.refresh,color: Colors.white)),
+          )
+        ],
         title: const Center(
           child: Text(
             'Mis Alimentos',
@@ -115,11 +102,12 @@ class _FoodScreenState extends State<FoodScreen> {
               itemCount: foodsModels.length,
               itemBuilder: (BuildContext context, int index) { 
                 FoodModel food = foodsModels[index];
+                int foodId = food.foodId;
                 String nameFood = food.foodName;
                 String? category = food.category ?? 'Sin Categoria'; // Si la categoria da null entonces devuelve Sin categoria
                 return Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: ElemetList(nameFood: nameFood, category: category, deleteBox: () { deleteBox(); },),
+                  child: ElemetList(nameFood: nameFood, category: category, foodId: foodId,),
                 );
       
                },
@@ -137,10 +125,10 @@ class _FoodScreenState extends State<FoodScreen> {
 class ElemetList extends StatelessWidget {
   final String nameFood;
   final String category;
-  final VoidCallback deleteBox;
+  final int foodId;
 
   const ElemetList({
-    super.key, required this.nameFood, required this.category, required this.deleteBox,
+    super.key, required this.nameFood, required this.category, required this.foodId, 
   });
 
   @override
@@ -168,7 +156,9 @@ class ElemetList extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: IconButton(
-                      onPressed: deleteBox,
+                      onPressed: (){
+                        FoodService().deleteFoodById(foodId);
+                      },
                       icon: const Icon(Icons.delete,color: Color.fromARGB(255, 231, 226, 226),)),
                 )
               ],
