@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/foods/ex.dart';
 import 'package:flutter_application_1/screens/foods/food_screen.dart';
 import 'package:flutter_application_1/screens/landing_page/landing_page.dart';
 import 'package:flutter_application_1/screens/publication/publication_screen.dart';
@@ -46,6 +47,11 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.abc),
             label: 'Test',
           ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.storefront),
+            icon: Icon(Icons.abc),
+            label: 'Test',
+          ),
         ],
       ),
       body: <Widget>[
@@ -53,6 +59,7 @@ class _HomeState extends State<Home> {
         FoodScreen(),
         PublicationScreen(),
         const YesNoTest(),
+        MyHomePage(),
         
 
       ][currentPageIndex],
