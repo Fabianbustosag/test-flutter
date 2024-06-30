@@ -23,7 +23,11 @@ class FoodScreen extends StatelessWidget {
               itemCount: foodsModels.length,
               itemBuilder: (BuildContext context, int index) { 
                 FoodModel food = foodsModels[index];
-                return Text(food.foodName);
+                // return Text(food.foodName);
+                return const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: ElemetList(),
+                );
       
                },
             );
@@ -31,6 +35,68 @@ class FoodScreen extends StatelessWidget {
             return const Text('No data'); // Muestra un mensaje si no hay datosPP
           }
         },
+      ),
+      floatingActionButton: const MyFloatingButtons()
+    );
+  }
+}
+
+class MyFloatingButtons extends StatelessWidget {
+  const MyFloatingButtons({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: FloatingActionButton(
+            onPressed: () => {},
+            heroTag: "fab1",
+            child: const Icon(Icons.add),
+          ),
+        ),
+        FloatingActionButton(
+          onPressed: () => {},
+          heroTag: "fab2",
+          child: const Icon(Icons.crop_free_rounded),
+        ),
+      ]
+    );
+  }
+}
+
+class ElemetList extends StatelessWidget {
+  const ElemetList({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: Colors.blue),
+      child: Row(
+              children: [
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset( 'lib/images/naranja.jpg', height: 100,)),
+                const SizedBox( width: 20,),
+                const Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('nombreProducto'),
+                        Text('categoria'),
+                  ],
+                )),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.delete))
+              ],
       ),
     );
   }

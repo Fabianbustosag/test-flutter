@@ -49,10 +49,10 @@ class _HomeState extends State<Home> {
         ],
       ),
       body: <Widget>[
-        LandingPage(),
+        const LandingPage(),
         FoodScreen(),
         PublicationScreen(),
-        YesNoTest(),
+        const YesNoTest(),
         
 
       ][currentPageIndex],
