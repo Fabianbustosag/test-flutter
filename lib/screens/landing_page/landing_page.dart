@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/landing_page/widget/button_landing.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -10,7 +11,7 @@ class LandingPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       // crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Center(child: TopLanding()),
+        // Center(child: TopLanding()),
         Center(
             child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -27,32 +28,28 @@ class LandingPage extends StatelessWidget {
   }
 }
 
-class TopLanding extends StatelessWidget {
-  const TopLanding({
-    super.key,
-  });
+// class TopLanding extends StatelessWidget {
+//   const TopLanding({
+//     super.key,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      // margin: EdgeInsets.symmetric(horizontal:20),
-      width: MediaQuery.of(context).size.width * 0.80,
-      height: MediaQuery.of(context).size.height * 0.10,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: Colors.blue, // Cambia el color del borde aquí
-          width: 3, // Ancho del borde
-        ),
-      ),
-      child: const Column(
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: [Text('data'), Text('data')],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       // margin: EdgeInsets.symmetric(horizontal:20),
+//       width: MediaQuery.of(context).size.width * 0.80,
+//       height: MediaQuery.of(context).size.height * 0.10,
+//       decoration: BoxDecoration(
+//         color: Colors.white,
+//         borderRadius: BorderRadius.circular(20),
+//         border: Border.all(
+//           color: Colors.blue, // Cambia el color del borde aquí
+//           width: 3, // Ancho del borde
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 /// La parte de escanear los productos
 class QuestionOne extends StatelessWidget {
@@ -74,7 +71,7 @@ class QuestionOne extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           const Text(
-            'Ingresa tus productos aca',
+            'Ingresa tus productos aqui',
             style: TextStyle(
               color: Colors.white,
               fontSize: 13,
@@ -114,18 +111,19 @@ class QuestionOne2 extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const Column(
-            children: [
-              Text(
-                'Ingresa tus productos aca',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
+          Column(
+                  children: [
+                    const Text(
+                      '¿Necesitas comprar productos?',
+                      style: TextStyle(fontSize: 15,color: Colors.white),
+                    ),
+                    const SizedBox(height: 20),
+                    ButtonLanding(
+                      text: "Ir a lista de compra",
+                      onTap: () {}
+                    ),
+                  ]
                 ),
-              ),
-            ],
-          ),
           // SizedBox(width: 40,),
           Container(
             decoration: const BoxDecoration(
@@ -133,7 +131,7 @@ class QuestionOne2 extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: IconButton(
-                onPressed: () {}, icon: const Icon(Icons.crop_free_outlined)),
+                onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
           )
         ],
       ),

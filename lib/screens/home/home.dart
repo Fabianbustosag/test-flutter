@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/foods/ex.dart';
+import 'package:flutter_application_1/screens/profile_page/profile_page.dart';
 import 'package:flutter_application_1/screens/foods/food_screen.dart';
 import 'package:flutter_application_1/screens/landing_page/landing_page.dart';
 import 'package:flutter_application_1/screens/publication/publication_screen.dart';
-import 'package:flutter_application_1/screens/yes_no/test_yes_no.dart';
+import 'package:flutter_application_1/screens/seguimiento_screen/seguimiento_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -43,14 +43,14 @@ class _HomeState extends State<Home> {
             label: 'Tienda',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.storefront),
-            icon: Icon(Icons.abc),
-            label: 'Test',
+            selectedIcon: Icon(Icons.assessment),
+            icon: Icon(Icons.bar_chart),
+            label: 'Seguimiento',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.storefront),
-            icon: Icon(Icons.abc),
-            label: 'Test',
+            selectedIcon: Icon(Icons.person),
+            icon: Icon(Icons.perm_identity_rounded),
+            label: 'Perfil',
           ),
         ],
       ),
@@ -59,9 +59,8 @@ class _HomeState extends State<Home> {
         const LandingPage(),
         FoodScreen(),
         PublicationScreen(),
-        const YesNoTest(),
-        MyHomePage(),
-        
+        SeguimientoScreen(),
+        ProfilePage(),
 
       ][currentPageIndex],
     );
