@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/food_model.dart';
+import 'package:flutter_application_1/screens/foods/detail_food.dart';
 import 'package:flutter_application_1/screens/images/image_screen.dart';
 import 'package:flutter_application_1/service/food_service.dart';
 import 'package:intl/intl.dart';
@@ -198,7 +199,8 @@ class ElemetList extends StatefulWidget {
     super.key,
     required this.nameFood,
     required this.category,
-    required this.foodId, required this.imgSrc,
+    required this.foodId,
+    required this.imgSrc,
   });
 
   @override
@@ -206,7 +208,8 @@ class ElemetList extends StatefulWidget {
 }
 
 class _ElemetListState extends State<ElemetList> {
-  final String imgGeneric = 'http://127.0.0.1:8000/media/media/food_generic_2.png';
+  final String imgGeneric =
+      'http://127.0.0.1:8000/media/media/food_generic_2.png';
 
   @override
   Widget build(BuildContext context) {
@@ -249,14 +252,31 @@ class _ElemetListState extends State<ElemetList> {
           )),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: IconButton(
-                onPressed: () {
-                  FoodService().deleteFoodById(widget.foodId);
-                },
-                icon: const Icon(
-                  Icons.delete_outline,
-                  color: Color.fromARGB(255, 231, 226, 226),
-                )),
+            child: Column(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      FoodService().deleteFoodById(widget.foodId);
+                    },
+                    icon: const Icon(
+                      Icons.delete_outline,
+                      color: Color.fromARGB(255, 231, 226, 226),
+                    )),
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailFoodScreen()),
+                      );
+                      // FoodService().deleteFoodById(widget.foodId);
+                    },
+                    icon: const Icon(
+                      Icons.visibility,
+                      color: Color.fromARGB(255, 231, 226, 226),
+                    )),
+              ],
+            ),
           )
         ],
       ),

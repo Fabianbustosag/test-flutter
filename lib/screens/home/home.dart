@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/foods/detail_food.dart';
 import 'package:flutter_application_1/screens/foods/ex.dart';
 import 'package:flutter_application_1/screens/foods/food_screen.dart';
 import 'package:flutter_application_1/screens/landing_page/landing_page.dart';
@@ -56,7 +57,8 @@ class _HomeState extends State<Home> {
         ],
       ),
       body: <Widget>[
-        const LandingPage(),
+        DetailFoodScreen(),
+        // const LandingPage(),
         FoodScreen(),
         PublicationScreen(),
         const YesNoTest(),
