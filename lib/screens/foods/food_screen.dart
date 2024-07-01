@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/food_model.dart';
 import 'package:flutter_application_1/screens/foods/detail_food.dart';
 import 'package:flutter_application_1/screens/images/image_screen.dart';
 import 'package:flutter_application_1/service/food_service.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 /// Esta Screen Funciona Con un [FutureBuilder] no con provider
@@ -14,6 +16,38 @@ class FoodScreen extends StatefulWidget {
 }
 
 class _FoodScreenState extends State<FoodScreen> {
+  String? imagePath;
+  final Dio _dio = Dio();
+
+  Future<void> _pickImage() async {
+    ImagePicker picker = ImagePicker();
+    XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    imagePath = pickedFile?.path;
+    // print('hila');
+    setState(() {});
+  }
+
+  Future<void> _uploadImage() async {
+    _dio.options.contentType = 'multipart/form-data';
+    // String fileName = image.path.split('/').last; // guarda el nombre de la imagen
+    String urlApi = 'http://127.0.0.1:8000/upload_2/';
+    FormData formData = FormData.fromMap({
+      "image": await MultipartFile.fromFile(imagePath!),
+    });
+    Response response = await _dio.post(
+      urlApi,
+      data: formData,
+      options: Options(
+        followRedirects: false,
+        contentType: 'multipart/form-data',
+        validateStatus: (status) {
+          return status! < 400 || status == 405;
+        },
+      ),
+    );
+    // Navigator.pop(context);
+  }
+
   FoodService foodService = FoodService();
 
   final TextEditingController nameController = TextEditingController();
@@ -22,6 +56,10 @@ class _FoodScreenState extends State<FoodScreen> {
       TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController foodAmountController = TextEditingController();
+  final TextEditingController foodAmountGController = TextEditingController();
+  final TextEditingController foodStateController = TextEditingController();
+  final TextEditingController foodDiscardDateController =
+      TextEditingController();
 
   // Funcion showDialog para agregar una nueva nota en la base de datos
   void openBox({String? docID}) {
@@ -47,13 +85,37 @@ class _FoodScreenState extends State<FoodScreen> {
                         labelText: 'Fecha de vencimiento'),
                   ),
                   TextField(
+                    controller: foodDiscardDateController,
+                    decoration:
+                        const InputDecoration(labelText: 'Fecha de descarte'),
+                  ),
+                  TextField(
                     controller: priceController,
                     decoration: const InputDecoration(labelText: 'Precio'),
+
+                  ),
+                  TextField(
+                    controller: foodStateController,
+                    decoration:
+                        const InputDecoration(labelText: 'Estado'),
                   ),
                   TextField(
                     controller: foodAmountController,
                     decoration: const InputDecoration(labelText: 'Cantidad'),
                   ),
+                  TextField(
+                    controller: foodAmountGController,
+                    decoration: const InputDecoration(labelText: 'Cantidad (g)'),
+                  ),
+
+
+
+                  // Boton de anadir imagen
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FilledButton(
+                        onPressed: _pickImage, child: Text('Anadir imagen')),
+                  )
                 ],
               ),
               actions: [
@@ -64,6 +126,8 @@ class _FoodScreenState extends State<FoodScreen> {
                       expirationDateController.clear();
                       priceController.clear();
                       foodAmountController.clear();
+                      foodAmountGController.clear();
+                      foodStateController.clear();
                       Navigator.pop(context);
                     },
                     child: const Text('Cancelar')),
@@ -158,12 +222,11 @@ class _FoodScreenState extends State<FoodScreen> {
               return ListView.builder(
                 itemCount: foodsModels.length,
                 itemBuilder: (BuildContext context, int index) {
-
                   String dateDefault = '00-00-0000';
                   FoodModel food = foodsModels[index];
                   int foodId = food.foodId;
                   String nameFood = food.foodName;
-                  String? category = food.category ?? 'Sin Categoria'; 
+                  String? category = food.category ?? 'Sin Categoria';
                   String imageSrc = food.imgSrc;
                   // String elaborationDate = food.elaborationDate.toString() ?? dateDefault;
                   // String expirationDate = food.expirationDate.toString() ?? dateDefault;
@@ -171,8 +234,7 @@ class _FoodScreenState extends State<FoodScreen> {
                   // String departureDate = food.departureDate.toString() ?? dateDefault;
                   // String discardDate = food.discardDate.toString() ?? dateDefault;
                   // String foodAmountG = food.foodAmountG.toString() ?? dateDefault;
-                  
-                  
+
                   return Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: ElemetList(
@@ -276,7 +338,9 @@ class _ElemetListState extends State<ElemetList> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DetailFoodScreen(foodId: widget.foodId,)),
+                            builder: (context) => DetailFoodScreen(
+                                  foodId: widget.foodId,
+                                )),
                       );
                       // FoodService().deleteFoodById(widget.foodId);
                     },

@@ -69,7 +69,7 @@ class _PublicationScreenState extends State<PublicationScreen> {
             
             
                       // return Text(publication.publDescp);
-                      return CardPublication(imageUrl: imageUrl, namePublication: namePubl,pricePublication: publPriceString, funcDelete: false,publId: publId ,);
+                      return CardPublication(imageUrl: imageUrl, namePublication: namePubl,pricePublication: publPriceString, funcDelete: false,publId: publId ,sendMessage: true,);
             
                      },
                   );
