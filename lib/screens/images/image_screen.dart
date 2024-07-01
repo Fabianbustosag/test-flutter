@@ -47,6 +47,7 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
         },
       ),
     );
+    // Navigator.pop(context);
   }
 
   @override

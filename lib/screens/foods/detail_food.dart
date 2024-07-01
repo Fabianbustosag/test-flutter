@@ -83,7 +83,7 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
           return ListView(
             children:  [
               TitleField(editField: (){openBox(title: 'Editar titulo');}, nameField: capitalize(nameFood),),
-              const AddImageWidget(),
+              AddImageWidget(imgUrl: imageSrc ?? 'http://127.0.0.1:8000/media/media/food_generic_2.png',),
               MyTextField(nameFIeld: 'Categoria', iconData: Icons.arrow_forward_rounded,editField: (){openBox(title: 'Editar categoria');}, textField: category,), //Categoria
               MyTextField(nameFIeld: 'Precio', iconData: Icons.attach_money_outlined,editField: (){openBox(title: 'Editart precio');}, textField: price,), //Precio
               MyTextField(nameFIeld: 'Estado', iconData: Icons.check,editField: (){openBox(title: 'Editar estado');}, textField: state,), //Estado
@@ -106,8 +106,9 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
 }
 
 class AddImageWidget extends StatelessWidget {
+  final String imgUrl;
   const AddImageWidget({
-    super.key,
+    super.key, required this.imgUrl,
   });
 
   @override
@@ -115,11 +116,22 @@ class AddImageWidget extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: (){},
-        child: const SizedBox(
-          width: 300,
+        child: SizedBox(
+          // width: 20,
           height: 150,
-          child: Icon(Icons.add_photo_alternate_rounded)
-        ),
+          child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  // child: Image.asset( 'lib/images/naranja.jpg', height: 100,)),
+                  child: Image.network(
+                    imgUrl,
+                    width: 10,
+                  )),
+        )
+        // child: const SizedBox(
+        //   width: 300,
+        //   height: 150,
+        //   child: Icon(Icons.add_photo_alternate_rounded)
+        // ),
       ),
     );
   }
