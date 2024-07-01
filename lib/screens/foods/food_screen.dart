@@ -158,12 +158,21 @@ class _FoodScreenState extends State<FoodScreen> {
               return ListView.builder(
                 itemCount: foodsModels.length,
                 itemBuilder: (BuildContext context, int index) {
+
+                  String dateDefault = '00-00-0000';
                   FoodModel food = foodsModels[index];
                   int foodId = food.foodId;
                   String nameFood = food.foodName;
-                  String? category = food.category ??
-                      'Sin Categoria'; // Si la categoria da null entonces devuelve Sin categoria
+                  String? category = food.category ?? 'Sin Categoria'; 
                   String imageSrc = food.imgSrc;
+                  // String elaborationDate = food.elaborationDate.toString() ?? dateDefault;
+                  // String expirationDate = food.expirationDate.toString() ?? dateDefault;
+                  // String entryDate = food.entryDate.toString() ?? dateDefault;
+                  // String departureDate = food.departureDate.toString() ?? dateDefault;
+                  // String discardDate = food.discardDate.toString() ?? dateDefault;
+                  // String foodAmountG = food.foodAmountG.toString() ?? dateDefault;
+                  
+                  
                   return Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: ElemetList(

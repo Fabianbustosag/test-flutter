@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/food_model.dart';
+import 'package:flutter_application_1/screens/foods/food_screen.dart';
 import 'package:flutter_application_1/service/food_service.dart';
 
 class DetailFoodScreen extends StatefulWidget {
@@ -54,20 +56,50 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
         ),
         backgroundColor: Colors.blue,
       ),
-      body: ListView(
-        children:  [
-          TitleField(editField: (){openBox(title: 'Editar titulo');},),
-          const AddImageWidget(),
-          MyTextField(nameFIeld: 'Categoria', iconData: Icons.arrow_forward_rounded,editField: (){openBox(title: 'Editar categoria');},),
-          MyTextField(nameFIeld: 'Precio', iconData: Icons.attach_money_outlined,editField: (){openBox(title: 'Editart precio');}),
-          MyTextField(nameFIeld: 'Estado', iconData: Icons.check,editField: (){openBox(title: 'Editar estado');}),
-          MyTextField(nameFIeld: 'Cantidad', iconData: Icons.arrow_forward_rounded,editField: (){openBox(title: 'Editar cantidad');}),
-          MyTextField(nameFIeld: 'Fecha de vencimiento', iconData: Icons.date_range,editField: (){openBox(title: 'Editar fecha de vencimiento');}),
-          MyTextField(nameFIeld: 'Fecha de entrada', iconData: Icons.date_range,editField: (){openBox(title:'Editar fecha de entrada');}),
-          MyTextField(nameFIeld: 'Notificacion',iconData: Icons.notification_add_outlined,editField: (){openBox(title:'Editar notificacion');}),
-          const SizedBox(height: 10,),
-          const ButtonImage()
-        ],
+      body: FutureBuilder<FoodModel>(
+        future: foodService.getFoodById(widget.foodId),
+        builder: (context, snapshot) {
+          if (snapshot.hasData){
+            FoodModel foodsModels = snapshot.data!;
+            String dateDefault = '00-00-0000';
+
+            FoodModel food = foodsModels;
+            int foodId = food.foodId;
+            String nameFood = food.foodName;
+            int? foodPrice = food.foodPrice ?? 0;
+            String price = foodPrice.toString();
+            String? category = food.category ?? 'Sin Categoria'; 
+            String imageSrc = food.imgSrc;
+            String elaborationDate = food.elaborationDate.toString() ?? dateDefault;
+            String expirationDate = food.expirationDate.toString() ?? dateDefault;
+            String entryDate = food.entryDate.toString() ?? dateDefault;
+            String departureDate = food.departureDate.toString() ?? dateDefault;
+            String discardDate = food.discardDate.toString() ?? dateDefault;
+            String foodAmountG = food.foodAmountG.toString() ?? dateDefault;
+            int foodState = food.foodState ?? 1;
+            String state = foodState.toString();
+
+
+          return ListView(
+            children:  [
+              TitleField(editField: (){openBox(title: 'Editar titulo');}, nameField: capitalize(nameFood),),
+              const AddImageWidget(),
+              MyTextField(nameFIeld: 'Categoria', iconData: Icons.arrow_forward_rounded,editField: (){openBox(title: 'Editar categoria');}, textField: category,), //Categoria
+              MyTextField(nameFIeld: 'Precio', iconData: Icons.attach_money_outlined,editField: (){openBox(title: 'Editart precio');}, textField: price,), //Precio
+              MyTextField(nameFIeld: 'Estado', iconData: Icons.check,editField: (){openBox(title: 'Editar estado');}, textField: state,), //Estado
+              MyTextField(nameFIeld: 'Cantidad', iconData: Icons.arrow_forward_rounded,editField: (){openBox(title: 'Editar cantidad');}, textField: '',), //Cantidad
+              MyTextField(nameFIeld: 'Fecha de vencimiento', iconData: Icons.date_range,editField: (){openBox(title: 'Editar fecha de vencimiento');}, textField: '',), //vencimiento
+              MyTextField(nameFIeld: 'Fecha de entrada', iconData: Icons.date_range,editField: (){openBox(title:'Editar fecha de entrada');}, textField: '',), //entrada
+              MyTextField(nameFIeld: 'Notificacion',iconData: Icons.notification_add_outlined,editField: (){openBox(title:'Editar notificacion');}, textField: '',), //notificacion
+              const SizedBox(height: 10,),
+              const ButtonImage()
+            ],
+          );
+          }
+          else {
+            return const Text('No data');
+          }
+        }
       ),
     );
   }
@@ -126,9 +158,10 @@ class ButtonImage extends StatelessWidget {
 }
 
 class TitleField extends StatelessWidget {
+  final String nameField;
   final VoidCallback? editField;
   const TitleField({
-    super.key, this.editField,
+    super.key, this.editField, required this.nameField,
   });
 
   @override
@@ -141,8 +174,8 @@ class TitleField extends StatelessWidget {
           side: const BorderSide(color: Colors.blue, width: 2.0),
         ),
         tileColor: Colors.white,
-        title: const Text(
-          'Nombre del alimento',
+        title: Text(
+          nameField ?? 'No funciono',
           style: TextStyle(color: Colors.black),
         ),
         leading: const Icon(
@@ -162,6 +195,7 @@ class TitleField extends StatelessWidget {
 
 class MyTextField extends StatelessWidget {
   final String nameFIeld;
+  final String textField;
   final IconData iconData;
   final VoidCallback? editField;
 
@@ -169,34 +203,51 @@ class MyTextField extends StatelessWidget {
     super.key,
     required this.nameFIeld,
     required this.iconData,
-    this.editField,
+    this.editField, required this.textField,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3),
-      child: ListTile(
-        shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(10.0), // Cambia el radio de la esquina
-        ),
-        tileColor: Colors.blue,
-        title: Text(
-          nameFIeld,
-          style: const TextStyle(color: Colors.white),
-        ),
-        leading: Icon(
-          iconData,
-          color: Colors.white,
-        ),
-        trailing: IconButton(
-            onPressed: 
-              editField ?? (){},
-            icon: const Icon(
-              Icons.edit,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+              nameFIeld,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w700
+                ),
+            ),
+          const SizedBox(height: 3,),
+          ListTile(
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(10.0), // Cambia el radio de la esquina
+            ),
+            tileColor: Colors.blue,
+            title: Text(
+              textField,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700
+                
+                ),
+            ),
+            leading: Icon(
+              iconData,
               color: Colors.white,
-            )),
+            ),
+            trailing: IconButton(
+                onPressed: 
+                  editField ?? (){},
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.white,
+                )),
+          ),
+        ],
       ),
     );
   }

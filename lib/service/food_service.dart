@@ -25,7 +25,7 @@ class FoodService{
 
 
   Future<FoodModel> getFoodById(int id) async {
-    final response = await _dio.get('http://127.0.0.1:8000/api/food/${id}');
+    final response = await _dio.get('http://127.0.0.1:8000/api/food/${id}/');
     final foodModel = FoodModel.fromJson(response.data);
     return foodModel;
     // throw UnimplementedError();
