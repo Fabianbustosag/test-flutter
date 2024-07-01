@@ -75,7 +75,7 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
             String entryDate = food.entryDate.toString() ?? dateDefault;
             String departureDate = food.departureDate.toString() ?? dateDefault;
             String discardDate = food.discardDate.toString() ?? dateDefault;
-            String foodAmountG = food.foodAmountG.toString() ?? dateDefault;
+            String foodAmountG = food.foodAmountG.toString() ?? '0 g';
             int foodState = food.foodState ?? 1;
             String state = foodState.toString();
 
@@ -87,10 +87,10 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
               MyTextField(nameFIeld: 'Categoria', iconData: Icons.arrow_forward_rounded,editField: (){openBox(title: 'Editar categoria');}, textField: category,), //Categoria
               MyTextField(nameFIeld: 'Precio', iconData: Icons.attach_money_outlined,editField: (){openBox(title: 'Editart precio');}, textField: price,), //Precio
               MyTextField(nameFIeld: 'Estado', iconData: Icons.check,editField: (){openBox(title: 'Editar estado');}, textField: state,), //Estado
-              MyTextField(nameFIeld: 'Cantidad', iconData: Icons.arrow_forward_rounded,editField: (){openBox(title: 'Editar cantidad');}, textField: '',), //Cantidad
-              MyTextField(nameFIeld: 'Fecha de vencimiento', iconData: Icons.date_range,editField: (){openBox(title: 'Editar fecha de vencimiento');}, textField: '',), //vencimiento
-              MyTextField(nameFIeld: 'Fecha de entrada', iconData: Icons.date_range,editField: (){openBox(title:'Editar fecha de entrada');}, textField: '',), //entrada
-              MyTextField(nameFIeld: 'Notificacion',iconData: Icons.notification_add_outlined,editField: (){openBox(title:'Editar notificacion');}, textField: '',), //notificacion
+              MyTextField(nameFIeld: 'Cantidad', iconData: Icons.arrow_forward_rounded,editField: (){openBox(title: 'Editar cantidad');}, textField: foodAmountG,), //Cantidad
+              MyTextField(nameFIeld: 'Fecha de vencimiento', iconData: Icons.date_range,editField: (){openBox(title: 'Editar fecha de vencimiento');}, textField: expirationDate,), //vencimiento
+              MyTextField(nameFIeld: 'Fecha de entrada', iconData: Icons.date_range,editField: (){openBox(title:'Editar fecha de entrada');}, textField: entryDate,), //entrada
+              MyTextField(nameFIeld: 'Notificacion',iconData: Icons.notification_add_outlined,editField: (){openBox(title:'Editar notificacion');}, textField: 'Sin notificacion',), //notificacion
               const SizedBox(height: 10,),
               const ButtonImage()
             ],
@@ -168,26 +168,38 @@ class TitleField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3),
-      child: ListTile(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          side: const BorderSide(color: Colors.blue, width: 2.0),
-        ),
-        tileColor: Colors.white,
-        title: Text(
-          nameField ?? 'No funciono',
-          style: TextStyle(color: Colors.black),
-        ),
-        leading: const Icon(
-          Icons.restaurant,
-          color: Colors.black,
-        ),
-        trailing: IconButton(
-            onPressed: editField ?? (){},
-            icon: const Icon(
-              Icons.edit,
+      child: Column(
+        children: [
+          const Text(
+              'Nombre',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w700
+                ),
+            ),
+          const SizedBox(height: 3,),
+          ListTile(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              side: const BorderSide(color: Colors.blue, width: 2.0),
+            ),
+            tileColor: Colors.white,
+            title: Text(
+              nameField ?? 'No funciono',
+              style: TextStyle(color: Colors.black),
+            ),
+            leading: const Icon(
+              Icons.restaurant,
               color: Colors.black,
-            )),
+            ),
+            trailing: IconButton(
+                onPressed: editField ?? (){},
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.black,
+                )),
+          ),
+        ],
       ),
     );
   }
