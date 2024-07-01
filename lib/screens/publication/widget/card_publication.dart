@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/foods/food_screen.dart';
+import 'package:flutter_application_1/service/publication_service.dart';
 
 class CardPublication extends StatelessWidget {
+  final int? publId;
+  final String namePublication;
+  final String? pricePublication;
+  final String? imageUrl;
+  final String? locationPublication;
+  final VoidCallback? funcCreate;
+  final bool? funcDelete;
 
   const CardPublication({
-    Key? key,
-  }) : super(key: key);
+    super.key, required this.imageUrl, required this.namePublication, this.pricePublication, this.locationPublication, this.funcCreate, this.funcDelete, required this.publId,
+  });
 
   @override
   Widget build(BuildContext context) {
 
-    String imageUrl = 'http://127.0.0.1:8000/media/media/food_generic_1.png';
+    // String imageUrl = 'http://127.0.0.1:8000/media/media/food_generic_1.png';
     return Container(
       decoration: BoxDecoration(
         color: Colors.blue,
@@ -45,7 +53,7 @@ class CardPublication extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          capitalize('publication'),
+                          capitalize(namePublication),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 14,
@@ -54,18 +62,20 @@ class CardPublication extends StatelessWidget {
                         ),
                         Chip(
                           avatar: const Icon(Icons.attach_money),
-                          label: Text('precio'),
+                          label: Text(pricePublication ?? 'Sin precio'),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(13)
+                            side: const BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(20)
                           ),
                         ),
+                        const SizedBox(height: 3,),
                         ActionChip(
                           // color: Colors.amber,
                           avatar: const Icon(Icons.location_on),
-                          label: Text('Ubicacion'),
+                          label: Text(locationPublication ?? 'Sin ubicacion'),
                           shape: RoundedRectangleBorder(
-                            side: const BorderSide(color: Colors.blue),
-                            borderRadius: BorderRadius.circular(13)
+                            side: const BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(20)
                           ),
                         ),
                       ],
@@ -78,8 +88,19 @@ class CardPublication extends StatelessWidget {
           Positioned(
             top: 0,
             right: 0,
-            child: Row(
+            child: Column(
               children: [
+                if (funcDelete == true) // reemplaza 'condition' con tu condición
+                  IconButton(
+                    // solo visualizar la publicacion
+                    icon: const Icon(Icons.delete_outline, color: Colors.white),
+                    onPressed: () {
+                      // funcion nueva pantalla de detalles de la publicacion
+                      // funcDelete;
+                      PublicationService publicationService = PublicationService();
+                      publicationService.deletePublicationById(publId!);
+                    },
+                  ),
                 IconButton(
                   //solo visualizar la publicacion
                   icon: const Icon(Icons.visibility, color: Colors.white),

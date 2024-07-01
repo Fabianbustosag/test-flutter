@@ -18,6 +18,14 @@ class PublicationService{
     // throw UnimplementedError();
   }
 
+  // Falta implementar
+  // Future<PublicationModel> getPublicationByUserId(int userId) async {
+  //   final response = await _dio.get('http://127.0.0.1:8000/api/publication/userId/${userId}');
+  //   final publicationModel = PublicationModel.fromJson(response.data);
+  //   return publicationModel;
+  //   // throw UnimplementedError();
+  // }
+
   // El delete si funciona
   Future<void> deletePublicationById(int id) async {
     await _dio.delete('http://127.0.0.1:8000/api/publication/$id/');
