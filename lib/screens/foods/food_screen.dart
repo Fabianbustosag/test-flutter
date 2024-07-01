@@ -267,7 +267,7 @@ class _ElemetListState extends State<ElemetList> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DetailFoodScreen()),
+                            builder: (context) => DetailFoodScreen(foodId: widget.foodId,)),
                       );
                       // FoodService().deleteFoodById(widget.foodId);
                     },

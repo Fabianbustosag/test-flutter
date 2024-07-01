@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/foods/detail_food.dart';
 import 'package:flutter_application_1/screens/foods/ex.dart';
 import 'package:flutter_application_1/screens/foods/food_screen.dart';
 import 'package:flutter_application_1/screens/landing_page/landing_page.dart';
-import 'package:flutter_application_1/screens/publication/create_publication_screen.dart';
 import 'package:flutter_application_1/screens/publication/publication_screen.dart';
 import 'package:flutter_application_1/screens/yes_no/test_yes_no.dart';
 
@@ -57,8 +55,8 @@ class _HomeState extends State<Home> {
         ],
       ),
       body: <Widget>[
-        DetailFoodScreen(),
-        // const LandingPage(),
+        // DetailFoodScreen(),
+        const LandingPage(),
         FoodScreen(),
         PublicationScreen(),
         const YesNoTest(),

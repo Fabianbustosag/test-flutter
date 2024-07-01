@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/service/food_service.dart';
 
 class DetailFoodScreen extends StatefulWidget {
-  const DetailFoodScreen({super.key});
+  final int foodId;
+
+  const DetailFoodScreen({super.key, required this.foodId});
 
   @override
   State<DetailFoodScreen> createState() => _DetailFoodScreenState();
 }
 
 class _DetailFoodScreenState extends State<DetailFoodScreen> {
+  final String defaulText = 'Sin Campo';
+  FoodService foodService = FoodService();
+
   final TextEditingController nameController = TextEditingController();
 
   void openBox({String? docID, String? title}) {
@@ -101,7 +107,7 @@ class ButtonImage extends StatelessWidget {
           // Respond to button press
         },
         icon: const Icon(Icons.add, size: 18),
-        label: const Text("Anadir imagen"),
+        label: const Text("Guardar"),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
               Colors.white), // Cambia el color de fondo
